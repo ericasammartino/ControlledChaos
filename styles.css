@@ -259,6 +259,33 @@ h3,
   gap: 0.75rem;
 }
 
+.checkout-status {
+  min-height: 1.5rem;
+  margin: 0.9rem 0 0;
+  font-size: 0.95rem;
+}
+
+.checkout-status-success {
+  color: var(--green-4);
+}
+
+.checkout-status-error {
+  color: #9b1c1c;
+}
+
+.checkout-message {
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+}
+
+.checkout-message-success {
+  color: var(--green-5);
+}
+
+.checkout-message-error {
+  color: var(--blue-4);
+}
+
 .booking-section .booking-card {
   margin-top: 0.9rem;
   background: linear-gradient(180deg, #ffffff 0%, var(--green-0) 100%);

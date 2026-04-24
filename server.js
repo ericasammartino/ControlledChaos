@@ -15,22 +15,22 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY || "");
 const domainUrl = process.env.DOMAIN_URL || `http://localhost:${port}`;
 
 const products = {
-  label-bin-set: {
+  "label-bin-set": {
     name: "Label-Ready Bin Set",
     description: "Stackable bins for pantry, closet, and toy organization.",
     amount: 3900
   },
-  drawer-divider-kit: {
+  "drawer-divider-kit": {
     name: "Drawer Divider Kit",
     description: "Adjustable bamboo dividers for kitchen and dresser drawers.",
     amount: 3400
   },
-  travel-capsule-cubes: {
+  "travel-capsule-cubes": {
     name: "Travel Capsule Cubes",
     description: "Compression packing cubes for organized and efficient trips.",
     amount: 2700
   },
-  command-center-board: {
+  "command-center-board": {
     name: "Command Center Board",
     description: "Weekly planner board for calendars, meal prep, and notes.",
     amount: 3100
