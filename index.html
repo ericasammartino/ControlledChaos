@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Controlled Chaos | Home Organizing</title>
+    <meta
+      name="description"
+      content="Mobile home organizing service with consultation booking, service slider, and curated organizing products."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero" id="top">
+      <nav class="nav">
+        <a class="brand" href="#top">Controlled Chaos</a>
+        <a class="nav-link" href="#book">Book Now</a>
+      </nav>
+      <div class="hero-content">
+        <p class="eyebrow">Home Organizing Service</p>
+        <h1>Bring calm to every corner of your life.</h1>
+        <p>
+          We help busy homes feel lighter with practical systems, day-to-day
+          management support, and planning that keeps life flowing.
+        </p>
+        <a class="btn btn-primary" href="#book">Book a Consultation</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="section" id="services">
+        <div class="section-heading">
+          <p class="eyebrow">How We Help</p>
+          <h2>Services tailored to your routine</h2>
+        </div>
+
+        <div class="slider-controls">
+          <button class="icon-btn" id="prevSlide" aria-label="Previous service">
+            &#8592;
+          </button>
+          <button class="icon-btn" id="nextSlide" aria-label="Next service">
+            &#8594;
+          </button>
+        </div>
+
+        <div class="slider" id="serviceSlider" aria-label="Service cards">
+          <article class="service-card">
+            <h3>Home Organization</h3>
+            <p>
+              Declutter and create simple systems for kitchens, closets, and
+              storage spaces so your home stays functional.
+            </p>
+            <a href="#book">Book this service</a>
+          </article>
+          <article class="service-card">
+            <h3>Household Management</h3>
+            <p>
+              Build routines, schedules, and reset plans that make daily home
+              operations easier for the whole household.
+            </p>
+            <a href="#book">Book this service</a>
+          </article>
+          <article class="service-card">
+            <h3>Travel Planning</h3>
+            <p>
+              Stay organized on the go with packing systems, itinerary planning,
+              and pre-trip checklists designed for stress-free travel.
+            </p>
+            <a href="#book">Book this service</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section product-section" id="shop">
+        <div class="section-heading">
+          <p class="eyebrow">Shop Essentials</p>
+          <h2>Drop-shipped organizing products</h2>
+          <p>
+            Curated products shipped directly to your door to support your new
+            systems.
+          </p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card">
+            <h3>Label-Ready Bin Set</h3>
+            <p>Stackable bins for pantry, closet, and toy organization.</p>
+            <button class="btn btn-secondary" type="button">View Product</button>
+          </article>
+          <article class="product-card">
+            <h3>Drawer Divider Kit</h3>
+            <p>Adjustable bamboo dividers for kitchen and dresser drawers.</p>
+            <button class="btn btn-secondary" type="button">View Product</button>
+          </article>
+          <article class="product-card">
+            <h3>Travel Capsule Cubes</h3>
+            <p>Compression packing cubes for organized and efficient trips.</p>
+            <button class="btn btn-secondary" type="button">View Product</button>
+          </article>
+          <article class="product-card">
+            <h3>Command Center Board</h3>
+            <p>Weekly planner board for calendars, meal prep, and notes.</p>
+            <button class="btn btn-secondary" type="button">View Product</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="section booking-section" id="book">
+        <div class="section-heading">
+          <p class="eyebrow">Get Started</p>
+          <h2>Book your consultation</h2>
+        </div>
+        <div class="booking-card">
+          <p>
+            Ready for your organized reset? Book a 30-minute consultation to
+            create your custom plan.
+          </p>
+          <a class="btn btn-primary" href="mailto:hello@controlledchaos.com?subject=Consultation%20Booking">
+            Book Consultation
+          </a>
+        </div>
+      </section>
+
+      <section class="section contact-section" id="contact">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h2>Let’s plan your organizing goals</h2>
+        </div>
+        <div class="contact-card">
+          <p>Email: <a href="mailto:hello@controlledchaos.com">hello@controlledchaos.com</a></p>
+          <p>Phone: <a href="tel:+15551234567">(555) 123-4567</a></p>
+          <p>Instagram: <a href="https://instagram.com" target="_blank" rel="noreferrer">@controlledchaos</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; <span id="year"></span> Controlled Chaos. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
