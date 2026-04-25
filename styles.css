@@ -336,7 +336,8 @@ input[type="submit"]:focus-visible,
   margin: var(--space-lg) 0;
 }
 
-/* SERVICES */
+/* SERVICES + SHOP SCROLL CONTAINERS */
+.scroll-container,
 .service-card-container {
   display: flex;
   gap: var(--space-lg);
@@ -344,8 +345,10 @@ input[type="submit"]:focus-visible,
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
   perspective: 1000px;
+  scroll-padding-inline: var(--space-md);
 }
 
+.scroll-container::-webkit-scrollbar,
 .service-card-container::-webkit-scrollbar {
   display: none;
 }
@@ -499,6 +502,97 @@ input[type="submit"]:focus-visible,
 
 .scroll-dots button.active {
   background: var(--neutral-4);
+}
+
+/* SHOP */
+
+.shop-scroll {
+  --shop-card-width: clamp(220px, 42vw, 290px);
+}
+
+.shop-card,
+.shop-action-card {
+  flex: 0 0 var(--shop-card-width);
+  scroll-snap-align: start;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.shop-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 380px;
+  background: linear-gradient(160deg, #ffffff, var(--neutral-1));
+  color: var(--dark-font);
+  border: 1px solid var(--neutral-2);
+  overflow: hidden;
+}
+
+.shop-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  filter: var(--image-filter);
+}
+
+.shop-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.shop-card-content h4 {
+  font-weight: 500;
+  color: var(--neutral-5);
+}
+
+.shop-card-content p {
+  color: var(--neutral-4);
+}
+
+.shop-card-price {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  letter-spacing: 0.04rem;
+  color: var(--blue-4);
+}
+
+.shop-action-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: 380px;
+  padding: var(--space-lg);
+  background: linear-gradient(160deg, var(--blue-0), var(--neutral-1));
+  border: var(--border);
+  color: var(--dark-font);
+  text-align: left;
+}
+
+.shop-action-card h4 {
+  font-weight: 500;
+  color: var(--neutral-5);
+}
+
+.shop-action-card p {
+  color: var(--neutral-4);
+}
+
+.shop-action-card .cta {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.shop-action-card.checkout {
+  border-left: 5px solid var(--green-2);
+}
+
+.shop-action-card.more-products {
+  border-left: 5px solid var(--orange-4);
 }
 
 /* ABOUT */
