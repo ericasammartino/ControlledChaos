@@ -58,13 +58,15 @@ function renderProducts() {
   const productMarkup = products
     .map(
       (product) => `
-      <article class="shop-card" data-product-id="${product.id}">
-        <img src="${product.image}" alt="${product.name}" />
-        <div class="shop-card-content">
+      <article class="product-card" data-product-id="${product.id}">
+        <div class="product-image-wrap">
+          <img src="${product.image}" alt="${product.name}" />
+        </div>
+        <div class="product-body">
           <h4>${product.name}</h4>
-          <p>${product.description}</p>
-          <p class="shop-card-price">${formatCurrency(product.price)}</p>
-          <button class="cta add-to-cart-btn" type="button" data-add-id="${product.id}">
+          <p class="product-desc">${product.description}</p>
+          <p class="product-price">${formatCurrency(product.price)}</p>
+          <button class="add-btn" type="button" data-add-id="${product.id}">
             Add to cart
           </button>
         </div>
@@ -74,12 +76,12 @@ function renderProducts() {
     .join("");
 
   const actionMarkup = `
-    <article class="shop-action-card checkout">
+    <article class="product-card shop-action-card checkout">
       <h4>Ready to check out?</h4>
       <p>Jump to your cart summary and complete your order.</p>
       <a class="cta" href="#cart">Go to checkout</a>
     </article>
-    <article class="shop-action-card more-products">
+    <article class="product-card shop-action-card more-products">
       <h4>Need more options?</h4>
       <p>Browse the full product collection on the next page.</p>
       <a class="cta" href="/products">More products</a>
