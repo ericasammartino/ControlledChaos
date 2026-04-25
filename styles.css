@@ -582,6 +582,9 @@ input[type="submit"]:focus-visible,
 }
 
 .shop-action-card .cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0;
   width: 100%;
   text-align: center;
