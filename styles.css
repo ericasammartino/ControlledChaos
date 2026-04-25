@@ -618,9 +618,13 @@ input[type="submit"]:focus-visible,
 }
 
 .shop-action-card .cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
   text-align: center;
   margin: var(--space-sm) 0 0;
+  width: 100%;
 }
 
 .cart {
@@ -643,18 +647,31 @@ input[type="submit"]:focus-visible,
 
 .cart-item {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   gap: 0.5rem;
   align-items: center;
   font-size: 0.95rem;
 }
 
-.cart-remove-btn {
+.qty-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.qty-btn {
   border: 1px solid #ccc;
   background: #fff;
   width: 24px;
   height: 24px;
   border-radius: 6px;
+  cursor: pointer;
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  color: #a22;
   cursor: pointer;
 }
 

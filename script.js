@@ -1,33 +1,110 @@
 "use strict";
 
+const hamburger = document.getElementById("hamburger");
+const menu = document.getElementById("menu");
+const container = document.querySelector(".service-card-container");
+const cards = document.querySelectorAll(".service-card");
+const dotsContainer = document.querySelector(".scroll-dots");
+const steps = document.querySelectorAll(".about-sub");
+
+// HAMBURGER TRANSITION
+if (hamburger && menu) {
+  hamburger.addEventListener("click", function () {
+    hamburger.classList.toggle("open");
+    menu.classList.toggle("show-menu");
+  });
+}
+
+// FLIP CARD
+document.querySelectorAll(".service-card").forEach((card) => {
+  card.addEventListener("click", () => {
+    document.querySelectorAll(".service-card.flipped").forEach((flippedCard) => {
+      if (flippedCard !== card) flippedCard.classList.remove("flipped");
+    });
+    card.classList.toggle("flipped");
+  });
+});
+
+if (container && dotsContainer && cards.length > 0) {
+  // CREATE DOTS
+  cards.forEach((_, i) => {
+    const dot = document.createElement("button");
+    if (i === 0) dot.classList.add("active");
+    dotsContainer.appendChild(dot);
+  });
+
+  const dots = document.querySelectorAll(".scroll-dots button");
+
+  // GET TRUE SCROLL STEP
+  function getScrollStep() {
+    const card = cards[0];
+    const style = window.getComputedStyle(container);
+    const gap = parseInt(style.gap, 10) || 0;
+    return card.offsetWidth + gap;
+  }
+
+  // UPDATE ACTIVE DOT ON SCROLL
+  container.addEventListener("scroll", () => {
+    const step = getScrollStep();
+    const index = Math.round(container.scrollLeft / step);
+
+    dots.forEach((dot) => dot.classList.remove("active"));
+    if (dots[index]) dots[index].classList.add("active");
+  });
+
+  // CLICK DOT -> SCROLL
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      const step = getScrollStep();
+      container.scrollTo({
+        left: i * step,
+        behavior: "smooth",
+      });
+    });
+  });
+}
+
+// CHECK BOXES
+steps.forEach((step) => {
+  const img = step.querySelector("img");
+  if (!img) return;
+
+  const original = img.src;
+  const hover = img.dataset.hover;
+  if (!hover) return;
+
+  step.addEventListener("mouseenter", () => {
+    img.src = hover;
+  });
+
+  step.addEventListener("mouseleave", () => {
+    img.src = original;
+  });
+});
+
+// SHOP + CART
 const products = [
   {
-    id: "bins-01",
-    name: "Acrylic Pantry Bin",
-    description: "Clear stackable bin for cabinets, pantries, and bathrooms.",
-    price: 18.0,
-    image: "./product-bin.jpg",
+    id: "starter-bin-set",
+    name: "Starter Bin Set",
+    description: "Clear labeled bins for pantry, closet, or bathroom systems.",
+    price: 39.0,
+    image: "./images/starter-bin-set.jpg",
   },
   {
-    id: "labels-01",
-    name: "Minimal Label Set",
-    description: "Waterproof organizing labels with clean, modern typography.",
-    price: 12.0,
-    image: "./product-labels.jpg",
-  },
-  {
-    id: "drawer-01",
+    id: "drawer-divider-kit",
     name: "Drawer Divider Kit",
-    description: "Adjustable dividers for kitchen, office, and closet drawers.",
-    price: 26.0,
-    image: "./product-dividers.jpg",
+    description:
+      "Adjustable bamboo dividers to keep drawers neat and functional.",
+    price: 29.0,
+    image: "./images/drawer-divider-kit.jpg",
   },
   {
-    id: "travel-01",
-    name: "Packing Cube Set",
-    description: "Lightweight packing cubes to keep travel essentials sorted.",
-    price: 22.0,
-    image: "./product-cubes.jpg",
+    id: "label-bundle",
+    name: "Home Label Bundle",
+    description: "Pre-printed and blank labels for fast, clean organization.",
+    price: 19.0,
+    image: "./images/label-bundle.jpg",
   },
 ];
 
@@ -36,46 +113,38 @@ const cart = new Map();
 const productGrid = document.getElementById("product-grid");
 const cartItems = document.getElementById("cart-items");
 const cartSubtotal = document.getElementById("cart-subtotal");
-const checkoutButton = document.getElementById("checkout-btn");
+const checkoutBtn = document.getElementById("checkout-btn");
 const checkoutMessage = document.getElementById("checkout-message");
-const hamburger = document.getElementById("hamburger");
-const menu = document.getElementById("menu");
 
-function formatCurrency(amount) {
+function money(n) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(amount);
-}
-
-function setFallbackImage(event) {
-  event.target.src = "https://placehold.co/700x500/d6e7ec/003e5b?text=Product";
+  }).format(n);
 }
 
 function renderProducts() {
   if (!productGrid) return;
 
-  const productMarkup = products
+  const productCards = products
     .map(
-      (product) => `
-      <article class="product-card" data-product-id="${product.id}">
+      (p) => `
+      <article class="product-card">
         <div class="product-image-wrap">
-          <img src="${product.image}" alt="${product.name}" />
+          <img src="${p.image}" alt="${p.name}" loading="lazy" />
         </div>
         <div class="product-body">
-          <h4>${product.name}</h4>
-          <p class="product-desc">${product.description}</p>
-          <p class="product-price">${formatCurrency(product.price)}</p>
-          <button class="add-btn" type="button" data-add-id="${product.id}">
-            Add to cart
-          </button>
+          <h4>${p.name}</h4>
+          <p class="product-desc">${p.description}</p>
+          <p class="product-price">${money(p.price)}</p>
+          <button class="add-btn" data-add-id="${p.id}">Add to Cart</button>
         </div>
       </article>
     `
     )
     .join("");
 
-  const actionMarkup = `
+  const actionCards = `
     <article class="product-card shop-action-card checkout">
       <h4>Ready to check out?</h4>
       <p>Jump to your cart summary and complete your order.</p>
@@ -88,130 +157,110 @@ function renderProducts() {
     </article>
   `;
 
-  productGrid.innerHTML = productMarkup + actionMarkup;
-
-  productGrid.querySelectorAll("img").forEach((img) => {
-    img.addEventListener("error", setFallbackImage, { once: true });
-  });
-
-  productGrid.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-add-id]");
-    if (!button) return;
-    const productId = button.getAttribute("data-add-id");
-    addToCart(productId);
-  });
+  productGrid.innerHTML = productCards + actionCards;
 }
 
-function addToCart(productId) {
-  const product = products.find((item) => item.id === productId);
-  if (!product) return;
-
-  const currentQty = cart.get(productId) ?? 0;
-  cart.set(productId, currentQty + 1);
-  renderCart();
-}
-
-function removeFromCart(productId) {
-  const currentQty = cart.get(productId);
-  if (!currentQty) return;
-
-  if (currentQty === 1) {
-    cart.delete(productId);
-  } else {
-    cart.set(productId, currentQty - 1);
+function cartSubtotalValue() {
+  let total = 0;
+  for (const [id, qty] of cart.entries()) {
+    const product = products.find((p) => p.id === id);
+    if (product) total += product.price * qty;
   }
-
-  renderCart();
+  return total;
 }
 
 function renderCart() {
-  if (!cartItems || !cartSubtotal || !checkoutButton) return;
+  if (!cartItems || !cartSubtotal || !checkoutBtn) return;
 
-  if (cart.size === 0) {
-    cartItems.innerHTML = "<li class='cart-empty'>Your cart is empty.</li>";
-    cartSubtotal.textContent = formatCurrency(0);
-    checkoutButton.disabled = true;
-    return;
+  const rows = [];
+  for (const [id, qty] of cart.entries()) {
+    const p = products.find((x) => x.id === id);
+    if (!p) continue;
+
+    rows.push(`
+      <li class="cart-item">
+        <span>${p.name}</span>
+        <div class="qty-controls">
+          <button class="qty-btn" data-dec-id="${p.id}" aria-label="Decrease ${p.name} quantity">-</button>
+          <span>${qty}</span>
+          <button class="qty-btn" data-inc-id="${p.id}" aria-label="Increase ${p.name} quantity">+</button>
+        </div>
+        <button class="remove-btn" data-remove-id="${p.id}">Remove</button>
+      </li>
+    `);
   }
 
-  const itemsMarkup = [...cart.entries()]
-    .map(([productId, qty]) => {
-      const product = products.find((item) => item.id === productId);
-      if (!product) return "";
-
-      return `
-        <li class="cart-item">
-          <div>
-            <p class="cart-item-name">${product.name}</p>
-            <p class="cart-item-meta">${qty} × ${formatCurrency(product.price)}</p>
-          </div>
-          <button type="button" class="cart-remove-btn" data-remove-id="${product.id}" aria-label="Remove one ${product.name}">
-            &minus;
-          </button>
-        </li>
-      `;
-    })
-    .join("");
-
-  cartItems.innerHTML = itemsMarkup;
-
-  const subtotal = [...cart.entries()].reduce((total, [productId, qty]) => {
-    const product = products.find((item) => item.id === productId);
-    return total + (product ? product.price * qty : 0);
-  }, 0);
-
-  cartSubtotal.textContent = formatCurrency(subtotal);
-  checkoutButton.disabled = false;
+  cartItems.innerHTML = rows.length
+    ? rows.join("")
+    : "<li class='cart-empty'>Your cart is empty.</li>";
+  cartSubtotal.textContent = money(cartSubtotalValue());
+  checkoutBtn.disabled = cart.size === 0;
 }
 
-function bindCartEvents() {
-  if (!cartItems || !checkoutButton || !checkoutMessage) return;
+document.addEventListener("click", (e) => {
+  const target = e.target;
+  if (!(target instanceof Element)) return;
 
-  cartItems.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-remove-id]");
-    if (!button) return;
-    const productId = button.getAttribute("data-remove-id");
-    removeFromCart(productId);
-  });
+  const addId = target.getAttribute("data-add-id");
+  const incId = target.getAttribute("data-inc-id");
+  const decId = target.getAttribute("data-dec-id");
+  const removeId = target.getAttribute("data-remove-id");
 
-  checkoutButton.addEventListener("click", () => {
-    checkoutMessage.textContent =
-      "Checkout routing can be connected next (Stripe/cart page).";
-  });
-}
+  if (addId) {
+    cart.set(addId, (cart.get(addId) || 0) + 1);
+    renderCart();
+  }
 
-function bindNav() {
-  if (!hamburger || !menu) return;
+  if (incId) {
+    cart.set(incId, (cart.get(incId) || 0) + 1);
+    renderCart();
+  }
 
-  const menuLinks = menu.querySelectorAll("a");
+  if (decId) {
+    const qty = cart.get(decId) || 0;
+    if (qty <= 1) cart.delete(decId);
+    else cart.set(decId, qty - 1);
+    renderCart();
+  }
 
-  hamburger.addEventListener("click", () => {
-    const isOpen = hamburger.classList.toggle("open");
-    menu.classList.toggle("show-menu", isOpen);
-    hamburger.setAttribute("aria-expanded", String(isOpen));
-  });
+  if (removeId) {
+    cart.delete(removeId);
+    renderCart();
+  }
+});
 
-  menuLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      hamburger.classList.remove("open");
-      menu.classList.remove("show-menu");
-      hamburger.setAttribute("aria-expanded", "false");
-    });
-  });
-}
+if (checkoutBtn) {
+  checkoutBtn.addEventListener("click", async () => {
+    if (!checkoutMessage) return;
 
-function bindServiceCards() {
-  document.querySelectorAll(".service-card").forEach((card) => {
-    const openButton = card.querySelector('[data-flip="open"]');
-    const closeButton = card.querySelector('[data-flip="close"]');
+    checkoutMessage.textContent = "";
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = "Redirecting...";
 
-    openButton?.addEventListener("click", () => card.classList.add("flipped"));
-    closeButton?.addEventListener("click", () => card.classList.remove("flipped"));
+    try {
+      const items = [...cart.entries()].map(([id, quantity]) => ({
+        id,
+        quantity,
+      }));
+
+      const res = await fetch("/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ items }),
+      });
+
+      if (!res.ok) throw new Error("Could not start checkout");
+      const data = await res.json();
+
+      if (!data.url) throw new Error("Missing checkout URL");
+      window.location.href = data.url;
+    } catch (err) {
+      checkoutMessage.textContent = "Checkout failed. Please try again.";
+      checkoutBtn.disabled = false;
+      checkoutBtn.textContent = "Checkout with Stripe";
+    }
   });
 }
 
 renderProducts();
 renderCart();
-bindCartEvents();
-bindNav();
-bindServiceCards();
