@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-labelledby="contact-title">
+        <h1 id="contact-title">Contact Us</h1>
+        <p class="intro">
+          Have a question or feedback? Send us a message and we will respond as
+          soon as we can.
+        </p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <label for="name">Full Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              minlength="2"
+              maxlength="80"
+              placeholder="Jane Doe"
+            />
+            <p class="field-error" id="name-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-row">
+            <label for="email">Email Address</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              placeholder="jane@example.com"
+            />
+            <p class="field-error" id="email-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-row">
+            <label for="subject">Subject</label>
+            <input
+              id="subject"
+              name="subject"
+              type="text"
+              required
+              minlength="3"
+              maxlength="120"
+              placeholder="How can we help?"
+            />
+            <p class="field-error" id="subject-error" aria-live="polite"></p>
+          </div>
+
+          <div class="form-row">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              minlength="10"
+              maxlength="1000"
+              placeholder="Tell us more details..."
+            ></textarea>
+            <p class="field-error" id="message-error" aria-live="polite"></p>
+          </div>
+
+          <button id="submit-button" type="submit">Send Message</button>
+          <p class="form-status" id="form-status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
