@@ -121,10 +121,33 @@ form.addEventListener("submit", async (event) => {
   submitButton.textContent = "Sending...";
 
   try {
-    // Replace this with an actual API endpoint in production.
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    const payload = Object.fromEntries(new FormData(form).entries());
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      if (result.errors && typeof result.errors === "object") {
+        Object.entries(result.errors).forEach(([fieldId, errorMessage]) => {
+          setFieldError(fieldId, String(errorMessage));
+        });
+      }
+
+      setFormStatus(result.message || "Something went wrong. Please try again.", "error");
+      return;
+    }
+
     form.reset();
-    setFormStatus("Thanks! Your message has been sent successfully.", "success");
+    setFormStatus(
+      result.message || "Thanks! Your message has been sent successfully.",
+      "success",
+    );
   } catch (error) {
     setFormStatus("Something went wrong. Please try again.", "error");
   } finally {
