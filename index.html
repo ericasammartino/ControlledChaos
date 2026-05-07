@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scroll Contrast Nav</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <nav id="site-nav" class="site-nav is-light">
+      <a href="#intro">Intro</a>
+      <a href="#features">Features</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <main>
+      <section id="intro" class="panel panel-dark" data-nav-contrast="light">
+        <h1>Intro</h1>
+        <p>
+          The nav reads this panel's <code>data-nav-contrast="light"</code> and
+          uses light text/icons for contrast.
+        </p>
+      </section>
+
+      <section id="features" class="panel panel-light" data-nav-contrast="dark">
+        <h2>Features</h2>
+        <p>
+          Here the nav flips to dark text because this panel requests
+          <code>dark</code> contrast.
+        </p>
+      </section>
+
+      <section id="gallery" class="panel panel-accent" data-nav-contrast="light">
+        <h2>Gallery</h2>
+        <p>
+          For colorful backgrounds you can still force nav contrast per section.
+        </p>
+      </section>
+
+      <section id="contact" class="panel panel-light" data-nav-contrast="dark">
+        <h2>Contact</h2>
+        <p>
+          Add <code>data-nav-contrast</code> to any section that can pass behind
+          your nav while scrolling.
+        </p>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
